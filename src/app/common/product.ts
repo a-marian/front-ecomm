@@ -1,4 +1,5 @@
 export class Product {
+  id : string;
   sku: string;
   name: string;
   description: string;
@@ -6,6 +7,7 @@ export class Product {
   imageUrl: string;
   active: boolean;
   unitsInStock:number;
-  dateCreated:Date;
+  dateCreated: Date;
   lastUpdate: Date;
+
 }
