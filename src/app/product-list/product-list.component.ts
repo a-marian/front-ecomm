@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ProductService} from "../services/product.service";
 import {Product} from "src/app/common/product";
 import {ActivatedRoute} from "@angular/router";
+import {CartItem} from "../common/cart-item";
+import {CartService} from "../services/cart.service";
 
 @Component({
   selector: 'app-product-list',
@@ -15,13 +17,16 @@ export class ProductListComponent implements OnInit {
   previousCategoryId: number = 1;
   searchMode: boolean = false;
 
-  thePageNumber: number= 1;
-  thePageSize: number= 10;
-  theTotalElements: number=0;
+  thePageNumber: number = 1;
+  thePageSize: number = 10;
+  theTotalElements: number = 0;
 
-  previousKeyword: string;
+  previousKeyword: string | null = null;
+
+
 
   constructor(private productService: ProductService,
+              private cartService: CartService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -41,11 +46,11 @@ export class ProductListComponent implements OnInit {
 
   handleProductSearch(){
 
-    const theKeyword: string = this.route.snapshot.paramMap.get('keyword');
+    const theKeyword: string | null = this.route.snapshot.paramMap.get('keyword');
 
     //if we have a different keyword tha previous then set thePageNumber to 1
     if(this.previousKeyword != theKeyword){
-      this.thePageNumber = 5;
+      this.thePageNumber = 1;
     }
     this.previousKeyword = theKeyword;
     console.log(`keyword=${theKeyword}, thePageNumber=${this.thePageNumber}`);
@@ -53,20 +58,21 @@ export class ProductListComponent implements OnInit {
     //now search for the products using keyword
     this.productService.searchProductsPaginate(this.thePageNumber -1,
                                                 this.thePageSize,
-                                                theKeyword)
-      .subscribe(this.processResult());
+                                                theKeyword).subscribe(this.processResult());
   }
 
   handleProductList(){
+    //Check if 'id' parameter is available
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
+
     if(hasCategoryId){
-      //get the id param string  convert string to a number using the + symbol
+      //Get the id param string,  convert string to a number using the + symbol
       this.currentCategoryId =  +this.route.snapshot.paramMap.has('id');
     }else {
       //if not category id is not available ... default to category 1
       this.currentCategoryId = 1;
     }
-    //Check if we have a diffrent category than previous
+    //Check if we have a different category than previous
     //note: Angular will reuse a component if it is currently
     if(this.previousCategoryId != this.currentCategoryId){
       this.thePageNumber= 1;
@@ -94,6 +100,12 @@ export class ProductListComponent implements OnInit {
     this.thePageSize = pageSize;
     this.thePageNumber = 1;
     this.listProducts();
+  }
+
+  addToCart(product: Product) {
+    console.log(`Adding to cart: ${product.name}`);
+    const cartItem = new CartItem(product);
+    this.cartService.addToCart(cartItem);
   }
 
 }
