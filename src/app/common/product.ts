@@ -3,7 +3,7 @@ export class Product {
   sku: string;
   name: string;
   description: string;
-  unitPrice: number;
+  unitPRice: number;
   imageUrl: string;
   active: boolean;
   unitsInStock:number;
@@ -15,7 +15,7 @@ export class Product {
    this.sku = "";
    this.name = "";
    this.description= "";
-   this.unitPrice = 0.00;
+   this.unitPRice = 0.00;
    this.imageUrl= "";
    this.active = false;
    this.unitsInStock= 1;

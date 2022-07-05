@@ -6,12 +6,12 @@
         <div *ngFor="let tempProduct of products" class="col-md-3">
           <div class="product-box">
             <a routerLink="/products/{{tempProduct.id }}">
-              <img src="{{ tempProduct.imageUrl }}}" class="img-responsive">
+              <img src="{{ tempProduct.imageUrl }}" class="img-responsive">
             </a>
             <a routerLink="/products/{{tempProduct.id }}">
               <h1>{{ tempProduct.name }}</h1>
             </a>
-            <div class="price">{{ tempProduct.unitPrice | currency: 'USD'}}</div>
+            <div class="price">{{ tempProduct.unitPRice | currency: 'USD'}}</div>
             <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to Cart</button>
           </div>
         </div>
