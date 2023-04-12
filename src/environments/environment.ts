@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  ecommApiUrl: "https://localhost:8443/api",
+  stripePublishableKey: "<<ADD-YOUR-STRIPE-PUBLISHABLE-KEY>>"
 };
 
 /*

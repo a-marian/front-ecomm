@@ -37,15 +37,15 @@ export class ShopFormService {
 
   getCountries() : Observable<Country[]>{
     return this.httpClient.get<GetResponseCountries>(this.countriesURl).pipe(
-      map(response => response._embedded.countries));
+      map(response => response._embedded.country));
   }
 
   getStates(countryCode: string): Observable<State[]>{
 
     const searchStateUrl = `${this.statesURl}/search/findByCountryCode?code=${countryCode}`;
 
-   return this.httpClient.get<GetResponseStates>(this.statesURl) .pipe(
-     map(response => response._embedded.states));
+   return this.httpClient.get<GetResponseStates>(searchStateUrl) .pipe(
+     map(response => response._embedded.state));
   }
 
 }
@@ -53,12 +53,12 @@ export class ShopFormService {
 
 interface GetResponseCountries {
   _embedded: {
-    countries: Country[];
+    country: Country[];
   }
 }
 
 interface GetResponseStates {
   _embedded: {
-    states: State[];
+    state: State[];
   }
 }
