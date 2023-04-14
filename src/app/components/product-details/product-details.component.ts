@@ -4,6 +4,8 @@ import {ProductService} from "../../services/product.service";
 import {ActivatedRoute} from "@angular/router";
 import {CartService} from "../../services/cart.service";
 import {CartItem} from "../../common/cart-item";
+import { Observable, pipe } from "rxjs";
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-details',
@@ -18,25 +20,19 @@ export class ProductDetailsComponent implements OnInit {
               private cartService: CartService,
               private route: ActivatedRoute) { }
 
-
-
-  ngOnInit(): void {
-    this.route.paramMap.subscribe(() => {
-      this.handleProductDetails();
-    })
+  ngOnInit() {
+   const theProductId = Number(this.route.snapshot.paramMap.get('id'));
+     this.productService.getProduct(theProductId).subscribe(
+         data => {
+           this.product = data;
+         }
+       )
   }
 
-  handleProductDetails(){
 
-    const theProductId: number  = Number(this.route.snapshot.paramMap.get('id'));
-
-    this.productService.getProduct(theProductId).subscribe(
-      data => {this.product = data})
-  }
-
-  addToCart() {
-    console.log(`Adding to cart: ${this.product.name}, ${this.product.unitPRice} `);
-    const cartItem = new CartItem(this.product);
+  addToCart(product: Product) {
+    console.log(`Adding to cart: ${this.product.productName}, ${this.product.unitPrice} `);
+    const cartItem = new CartItem(product);
     this.cartService.addToCart(cartItem);
   }
 }

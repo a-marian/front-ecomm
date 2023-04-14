@@ -2,15 +2,15 @@ import {CartItem} from "./cart-item";
 
 export class OrderItem {
 
-  imageUrl: string;
-  unitPrice: number;
-  quantity: number;
-  productId: number;
+  imageUrl?: string;
+  unitPrice?: number;
+  quantity?: number;
+  productId?: number;
 
   constructor(cartItem: CartItem) {
     this.imageUrl = cartItem.imageUrl;
     this.productId = cartItem.id;
     this.quantity = cartItem.quantity;
-    this.unitPrice = cartItem.unitPRice;
+    this.unitPrice = cartItem.unitPrice;
   }
 }

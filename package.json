@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --ssl=true --sslKey=./ssl-localhost/localhost.key --sslCert=./ssl-localhost/localhost.crt",
+    "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+     "e2e" : "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -20,8 +21,6 @@
     "@angular/router": "^15.2.6",
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@ng-bootstrap/ng-bootstrap": "^14.1.0",
-    "@okta/okta-angular": "^6.2.0",
-    "@okta/okta-auth-js": "7.0.2",
     "@types/stripe-v3": "^3.1.28",
     "bootstrap": "^5.2.3",
     "rxjs": "~7.8.0",
@@ -32,6 +31,7 @@
     "@angular-devkit/build-angular": "^15.2.5",
     "@angular/cli": "~15.2.5",
     "@angular/compiler-cli": "^15.2.6",
+    "@angular/language-service": "^15.2.6",
     "@angular/localize": "^15.2.6",
     "@types/jasmine": "~4.3.1",
     "jasmine-core": "~4.6.0",

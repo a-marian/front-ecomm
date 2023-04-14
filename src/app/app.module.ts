@@ -15,24 +15,14 @@ import { CartDetailsComponent } from './components/cart-details/cart-details.com
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import {ReactiveFormsModule} from "@angular/forms";
 
-import myAppConfig from "./config/my-app-config";
-import { OktaAuthModule, OKTA_CONFIG, OktaAuthGuard } from '@okta/okta-angular';
-import { OktaAuth } from '@okta/okta-auth-js';
-
-
 import { MemberPageComponent } from './components/member-page/member-page.component';
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
 
-const oktaAuth = new OktaAuth({
-  issuer: 'https://${yourOktaDomain}/oauth2/default',
-  clientId: '${yourClientID}',
-  redirectUri: window.location.origin + '/login/callback'
-});
 
 
 const routes: Routes = [
-  {path: 'order-history', component: OrderHistoryComponent, canActivate: [ OktaAuthGuard ]},
-  {path: 'members', component: MemberPageComponent, canActivate: [ OktaAuthGuard ]},
+  {path: 'order-history', component: OrderHistoryComponent},
+  {path: 'members', component: MemberPageComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'cart-details', component: CartDetailsComponent},
   {path: 'products/:id', component: ProductDetailsComponent},
@@ -61,10 +51,9 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule,
     NgbPaginationModule,
-    ReactiveFormsModule,
-    OktaAuthModule.forRoot({ oktaAuth })
+    ReactiveFormsModule
   ],
-  providers: [ProductService ],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

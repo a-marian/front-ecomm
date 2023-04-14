@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductService} from "../../services/product.service";
-import {ProductCategory} from "../../common/product-category";
+import {Category} from "../../common/category";
 
 @Component({
   selector: 'app-product-category-menu',
@@ -9,7 +9,7 @@ import {ProductCategory} from "../../common/product-category";
 })
 export class ProductCategoryMenuComponent implements OnInit {
 
-  productCategories: ProductCategory[] = [];
+  categories: Category[] = [];
 
   constructor(private productService: ProductService) { }
 
@@ -17,12 +17,9 @@ export class ProductCategoryMenuComponent implements OnInit {
     this.listProductCategories();
   }
 
-  private listProductCategories() {
-    this.productService.getProductCategories().subscribe(
-      data => {
-        console.log('Product categories' + JSON.stringify(data));
-        this.productCategories = data;
-      }
-    );
+  private listProductCategories():void {
+    this.productService.getCategories()
+    .subscribe(data => { this.categories = data});
   }
+
 }

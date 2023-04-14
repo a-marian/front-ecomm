@@ -17,13 +17,38 @@ export class CartService {
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
   constructor() {
-    let data = JSON.parse(this.storage.getItem('cartItems') || '{}');
-    if(data != null){
-      this.cartItems = data;
+    const data = JSON.parse(this.storage.getItem("cartItems") || "{}");
+    //if(data != null){
+      this.cartItems = JSON.parse(this.storage.getItem('cartItems') || '{}' );
       //compute totals based on the data that is read from storage
       this.computeCartTotals();
-    }
+    //}
   }
+
+    computeCartTotals(){
+      let totalPriceValue: number = 0;
+      let totalQuantityValue: number = 0;
+
+      for (let currentCartItem of this.cartItems) {
+        totalPriceValue += currentCartItem.quantity *  (currentCartItem.unitPrice || 0.0);
+        totalQuantityValue += currentCartItem.quantity;
+        console.log(`name: ${currentCartItem.name}, quantity=${currentCartItem.quantity},
+         unitPrice=${currentCartItem.unitPrice}, subTotalPrice=${totalPriceValue}`);
+      }
+
+      this.totalPrice.next(totalPriceValue);
+      this.totalQuantity.next(totalQuantityValue);
+
+      console.log(`totalPrice: ${totalPriceValue.toFixed(2)}, totalQuantity: ${totalQuantityValue}`);
+      console.log('----');
+
+      //persist cart data
+      this.persistCartItems();
+    }
+
+    persistCartItems(){
+      this.storage.setItem('cartItems', JSON.stringify(this.cartItems));
+    }
 
   addToCart(cartItem: CartItem){
     //check if we already have the item in our cart
@@ -48,30 +73,7 @@ export class CartService {
 
   }
 
-  computeCartTotals(){
-    let totalPriceValue: number = 0;
-    let totalQuantityValue: number = 0;
 
-    for (let currentCartItem of this.cartItems) {
-      totalPriceValue += currentCartItem.quantity *  currentCartItem.unitPRice;
-      totalQuantityValue += currentCartItem.quantity;
-      console.log(`name: ${currentCartItem.name}, quantity=${currentCartItem.quantity},
-       unitPrice=${currentCartItem.unitPRice}, subTotalPrice=${totalPriceValue}`);
-    }
-
-    this.totalPrice.next(totalPriceValue);
-    this.totalQuantity.next(totalQuantityValue);
-
-    console.log(`totalPrice: ${totalPriceValue.toFixed(2)}, totalQuantity: ${totalQuantityValue}`);
-    console.log('----');
-
-    //persist cart data
-    this.persistCartItems();
-  }
-
-  persistCartItems(){
-    this.storage.setItem('cartItems', JSON.stringify(this.cartItems));
-}
 
   decrementQuantity(tempCartItem: CartItem) {
     tempCartItem.quantity--;

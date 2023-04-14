@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {ProductService} from "../services/product.service";
 import {Product} from "src/app/common/product";
 import {ActivatedRoute} from "@angular/router";
-import {CartItem} from "../common/cart-item";
-import {CartService} from "../services/cart.service";
 
 @Component({
   selector: 'app-product-list',
-  templateUrl: './product-list-grid.component.html',
+  templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
@@ -26,7 +24,6 @@ export class ProductListComponent implements OnInit {
 
 
   constructor(private productService: ProductService,
-              private cartService: CartService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -81,10 +78,10 @@ export class ProductListComponent implements OnInit {
     console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
 
     //now get the products for the given category Id
-    this.productService.getProductListPaginate(this.thePageNumber -1,
+    return this.productService.getProductListPaginate(this.thePageNumber -1,
                                                 this.thePageSize,
                                                 this.currentCategoryId)
-      .subscribe(this.processResult());
+      .subscribe(data => {this.products = data});
   }
 
   processResult() {
@@ -101,11 +98,12 @@ export class ProductListComponent implements OnInit {
     this.thePageNumber = 1;
     this.listProducts();
   }
-
+  /**
   addToCart(product: Product) {
     console.log(`Adding to cart: ${product.name}`);
     const cartItem = new CartItem(product);
     this.cartService.addToCart(cartItem);
   }
 
+*/
 }
