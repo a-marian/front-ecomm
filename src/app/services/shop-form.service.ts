@@ -9,8 +9,8 @@ import {State} from "../common/state";
 })
 export class ShopFormService {
 
-  private countriesURl = 'http://localhost:8080/api/countries';
-  private statesURl = 'http://localhost:8080/api/states';
+  private countriesURl = 'http://localhost/api/countries';
+  private statesURl = 'http://localhost/api/states';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -36,29 +36,12 @@ export class ShopFormService {
   }
 
   getCountries() : Observable<Country[]>{
-    return this.httpClient.get<GetResponseCountries>(this.countriesURl).pipe(
-      map(response => response._embedded.country));
+    return this.httpClient.get<Country[]>(this.countriesURl);
   }
 
   getStates(countryCode: string): Observable<State[]>{
-
-    const searchStateUrl = `${this.statesURl}/search/findByCountryCode?code=${countryCode}`;
-
-   return this.httpClient.get<GetResponseStates>(searchStateUrl) .pipe(
-     map(response => response._embedded.state));
+    const searchStateUrl = `${this.statesURl}/country/${countryCode}`;
+    return this.httpClient.get<State[]>(searchStateUrl);
   }
 
-}
-
-
-interface GetResponseCountries {
-  _embedded: {
-    country: Country[];
-  }
-}
-
-interface GetResponseStates {
-  _embedded: {
-    state: State[];
-  }
 }
