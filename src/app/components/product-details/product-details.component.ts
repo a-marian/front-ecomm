@@ -21,18 +21,15 @@ export class ProductDetailsComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-   const theProductId = Number(this.route.snapshot.paramMap.get('id'));
+   const theProductId = Number(this.route.snapshot.paramMap.get('productId'));
      this.productService.getProduct(theProductId).subscribe(
-         data => {
-           this.product = data;
-         }
-       )
+         data => { this.product = data;})
   }
 
-
-  addToCart(product: Product) {
+  addToCart(){
     console.log(`Adding to cart: ${this.product.productName}, ${this.product.unitPrice} `);
-    const cartItem = new CartItem(product);
+    const cartItem = new CartItem(this.product.productId, this.product.productName,
+                              this.product.imageUrl, this.product.unitPrice);
     this.cartService.addToCart(cartItem);
   }
 }

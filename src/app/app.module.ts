@@ -25,10 +25,10 @@ const routes: Routes = [
   {path: 'members', component: MemberPageComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'cart-details', component: CartDetailsComponent},
-  {path: 'products/:id', component: ProductDetailsComponent},
+  {path: 'product/:productId', component: ProductDetailsComponent},
   {path: 'search/:keyword', component: ProductListComponent},
-  {path: 'category/:id', component: ProductListComponent},
-  {path: 'product-category', component: ProductListComponent},
+  {path: 'category/:categoryId', component: ProductListComponent},
+  {path: 'products/category/:categoryId', component: ProductListComponent},
   {path: 'products', component: ProductListComponent},
   {path: '', redirectTo: '/products', pathMatch:'full'},
   {path: '**', redirectTo: '/products', pathMatch:'full'}

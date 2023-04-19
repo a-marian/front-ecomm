@@ -55,16 +55,18 @@ export class ProductListComponent implements OnInit {
     //now search for the products using keyword
     this.productService.searchProductsPaginate(this.thePageNumber -1,
                                                 this.thePageSize,
-                                                theKeyword).subscribe(this.processResult());
+                                                theKeyword).subscribe(data => {
+                                                                             this.products = data;
+                                                                               });
   }
 
-  handleProductList(){
+  public handleProductList(){
     //Check if 'id' parameter is available
-    const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
+    const hasCategoryId: boolean = this.route.snapshot.paramMap.has('categoryId');
 
     if(hasCategoryId){
       //Get the id param string,  convert string to a number using the + symbol
-      this.currentCategoryId =  +this.route.snapshot.paramMap.has('id');
+      this.currentCategoryId =  +this.route.snapshot.paramMap.get('categoryId')!;
     }else {
       //if not category id is not available ... default to category 1
       this.currentCategoryId = 1;
@@ -87,9 +89,6 @@ export class ProductListComponent implements OnInit {
   processResult() {
     return data => {
       this.products = data._embedded.products;
-      this.thePageNumber = data.page.number + 1;
-      this.thePageSize = data.page.size;
-      this.theTotalElements = data.page.totalElements;
     };
   }
 

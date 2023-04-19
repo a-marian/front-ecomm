@@ -10,6 +10,7 @@ import {Category} from "../../common/category";
 export class ProductCategoryMenuComponent implements OnInit {
 
   categories: Category[] = [];
+  currentCategoryId: number = 1;
 
   constructor(private productService: ProductService) { }
 
@@ -21,5 +22,7 @@ export class ProductCategoryMenuComponent implements OnInit {
     this.productService.getCategories()
     .subscribe(data => { this.categories = data});
   }
+
+
 
 }

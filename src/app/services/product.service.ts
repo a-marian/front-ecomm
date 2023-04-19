@@ -9,8 +9,8 @@ import {Category} from "../common/category";
 })
 export class ProductService {
 
-  private baseUrl = 'http://localhost:8080/api/products';
-  private categoryUrl = 'http://localhost:8080/api/categories';
+  private baseUrl = 'http://localhost/api';
+  private categoryUrl = 'http://localhost/api/categories';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -20,8 +20,8 @@ export class ProductService {
 
   getProduct(theProductId: number): Observable<Product> {
     //to build url based on product id
-    const productUrl = `${this.baseUrl}/${theProductId}`;
-    console.log(this.httpClient.get<Product>(productUrl));
+    const productUrl = `${this.baseUrl}/product/${theProductId}`;
+    console.log("product-url: "+ productUrl);
     return this.httpClient.get<Product>(productUrl);
   }
 
@@ -29,7 +29,7 @@ export class ProductService {
                           thePageSize: number,
                           theCategoryId: number): Observable<Product[]> {
     //need to build URL based on categoryId, page and size
-    const searchUrl = `${this.baseUrl}?categoryId=${theCategoryId}`
+    const searchUrl = `${this.baseUrl}/products?categoryId=${theCategoryId}`
                       +`&page=${thePage}&size=${thePageSize}`;
 
     return this.httpClient.get<Product[]>(searchUrl);
@@ -37,23 +37,23 @@ export class ProductService {
   }
 
   getProductList(theCategoryId: number): Observable<Product[]> {
-    const searchUrl = `${this.baseUrl}/?categoryId=${theCategoryId}`;
+    const searchUrl = `${this.baseUrl}/products/?categoryId=${theCategoryId}`;
     return this.getProducts(searchUrl);
   }
 
   searchProducts(theKeyword: string | Observable<Product>[]) {
-    const searchUrl = `${this.baseUrl}?productName=${theKeyword}`;
+    const searchUrl = `${this.baseUrl}/products?productName=${theKeyword}`;
     return this.getProducts(searchUrl);
     }
 
   searchProductsPaginate(thePage: number,
                          thePageSize: number,
-                         theKeyword?: string | null): Observable<GetResponseProducts> {
+                         theKeyword?: string | null): Observable<Product[]> {
     //need to build URL based on keyword, page and size
-    const searchUrl = `${this.baseUrl}?name=${theKeyword}`;
+    const searchUrl = `${this.baseUrl}/products?productName=${theKeyword}`;
       +`&page=${thePage}&size=${thePageSize}`;
 
-    return this.httpClient.get<GetResponseProducts>(searchUrl);
+    return this.httpClient.get<Product[]>(searchUrl);
 
   }
 
