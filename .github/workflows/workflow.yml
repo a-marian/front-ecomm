@@ -26,7 +26,7 @@ jobs:
         run: npm install
       # Create production build
       - name: Build Website
-        run: npm run build -- --prod
+        run: npm run build -- -c production
       # Deploy to S3
       - name: Deploy to AWS S3
         uses: jakejarvis/s3-sync-action@v0.5.1
