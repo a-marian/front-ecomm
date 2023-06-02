@@ -1,7 +1,7 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 
-name: Deploy
+name: Deploy to AWS S3
 
 on:
   push:
@@ -11,18 +11,31 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+     matrix:
+      node-version: [16.x]
+    # steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
       - uses: actions/setup-node@v3
-      - name: Install dependencies
-        run: npm install
-      - name: Build Website
-        run: npm run build
-      - name: Set AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
         with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: NPM Install
+        run: npm install
+      # Create production build
+      - name: Build Website
+        run: npm run build -- --prod
+      # Deploy to S3
+      - name: Deploy to AWS S3
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        with:
+          args: --acl public-read --delete
+        env:
+          aws-s3-bucket: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_ID}}
           aws-secret-access-key: ${{ secrets.AWS_ACCESS_SECRET_KEY}}
           aws-region: us-est-1
-      - name: Copy to S3
-        run: aws s3 sync ./build/. s3://ecommapp
+          source-dir: "dist/front-ecomm"
+ 
