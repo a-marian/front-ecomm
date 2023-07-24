@@ -5,7 +5,7 @@ pipeline {
       VERSION = '1.0'
     }
     tools{
-      nodeJS "NodeJS"
+      nodejs "NodeJS"
     }
     stages {
       stage('build') {
