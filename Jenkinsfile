@@ -3,17 +3,15 @@ pipeline {
     agent any
     environment {
       VERSION = '1.0'
+      def dockerHome = tool 'docker'
+      env.PATH = "${dockerHome}/bin"
     }
     tools{
       nodejs "NodeJS"
     }
 
     stages {
-        stage('Initialize')
-            {
-                def dockerHome = tool 'docker'
-                env.PATH = "${dockerHome}/bin"
-            }
+
       stage('build') {
         steps {
           git url: 'https://github.com/a-marian/front-ecomm.git', branch: 'master', credentialsId: 'be9b4cef-9d18-4126-ac78-2cd6e73cb208'
