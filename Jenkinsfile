@@ -4,11 +4,14 @@ pipeline {
     environment {
       VERSION = '1.0'
     }
+    tools{
+      nodeJS 'node'
+    }
     stages {
       stage('build') {
         steps {
           git url: 'https://github.com/a-marian/front-ecomm.git', branch: 'master', credentialsId: 'be9b4cef-9d18-4126-ac78-2cd6e73cb208'
-          sh '/usr/bin/ng build --prod'
+          sh 'npm install'
         }
       }
       stage('build image') {
