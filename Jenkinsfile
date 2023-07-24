@@ -7,12 +7,13 @@ pipeline {
     tools{
       nodejs "NodeJS"
     }
-    stage('Initialize')
-        {
-            def dockerHome = tool 'docker'
-            env.PATH = "${dockerHome}/bin"
-        }
+
     stages {
+        stage('Initialize')
+            {
+                def dockerHome = tool 'docker'
+                env.PATH = "${dockerHome}/bin"
+            }
       stage('build') {
         steps {
           git url: 'https://github.com/a-marian/front-ecomm.git', branch: 'master', credentialsId: 'be9b4cef-9d18-4126-ac78-2cd6e73cb208'
