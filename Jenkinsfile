@@ -7,6 +7,11 @@ pipeline {
     tools{
       nodejs "NodeJS"
     }
+    stage('Initialize')
+        {
+            def dockerHome = tool 'docker'
+            env.PATH = "${dockerHome}/bin"
+        }
     stages {
       stage('build') {
         steps {
