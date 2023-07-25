@@ -3,11 +3,11 @@ pipeline {
     agent any
     environment {
       VERSION = '1.0'
-      def dockerHome = tool 'docker'
-      env.PATH = "${dockerHome}/bin"
+
     }
     tools{
-      nodejs "NodeJS"
+      nodejs "NodeJS",
+      docker "docker"
     }
 
     stages {
