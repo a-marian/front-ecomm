@@ -6,7 +6,8 @@ pipeline {
 
     }
     tools{
-      nodejs "NodeJS"
+      nodejs "NodeJS",
+      docker "docker"
     }
 
     stages {
