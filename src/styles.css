@@ -215,11 +215,33 @@ a,a:hover{
 }
 
 .main-content{
-  padding-top:250px;
-  min-height:100vh
+  padding-top:150px;
 }
 
-
+.main-content-carousel{
+  padding-top:200px;
+  position:relative;
+  margin:400px 0 0 10px;
+  left:0;
+  right:0;
+  -webkit-transform:translateY(-50%);
+  -moz-transform:translateY(-50%);
+  -ms-transform:translateY(-50%);
+  -o-transform:translateY(-50%);
+  transform:translateY(-50%)
+}
+.main-content-products{
+  padding-top:450px;
+  position:relative;
+  margin:400px 0 0 10px;
+  left:0;
+  right:0;
+  -webkit-transform:translateY(-50%);
+  -moz-transform:translateY(-50%);
+  -ms-transform:translateY(-50%);
+  -o-transform:translateY(-50%);
+  transform:translateY(-50%)
+}
 
 /*
  * ----------------------------
@@ -239,20 +261,6 @@ a,a:hover{
   height:75px;
   z-index:3
 }
-
-.section-content{
-  position:relative;
-  margin:400px 0 0 10px;
-  left:0;
-  right:0;
-  -webkit-transform:translateY(-50%);
-  -moz-transform:translateY(-50%);
-  -ms-transform:translateY(-50%);
-  -o-transform:translateY(-50%);
-  transform:translateY(-50%)
-}
-
-
 
 .section-content-p30{
   padding:0 30px
